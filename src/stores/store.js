@@ -1,14 +1,20 @@
-import { createStore, applyMiddleware } from 'redux';
-import reducer from './reducer';
-import thunkMiddleware from 'redux-thunk';
-import {createLogger} from 'redux-logger';
 
-const store = createStore(
-  reducer,
-  applyMiddleware(
-    createLogger(),
-    thunkMiddleware,
-    reduxImmutableStateInvariant()
-  )
-);
-export default store;
+import {createStore, applyMiddleware, compose} from 'redux';
+import rootReducers from '../reducers';
+import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
+import thunk from 'redux-thunk';
+
+const logger  = (store) => (next) => (action) => {
+    if(typeof action !== "function") {
+        console.log("dispatching ... ", action);
+    }
+    return next(action)
+};
+
+export default function configureStore(initialState) {
+    return createStore(
+        rootReducers,
+        initialState,
+        compose(applyMiddleware(logger, thunk, reduxImmutableStateInvariant()))
+    );
+}

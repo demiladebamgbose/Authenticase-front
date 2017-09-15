@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as userActions from '../actions/UserActions';
 
 class Login extends Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            username: '',
+            password: ''
+        }
+    }
 
   render () {
     return (
@@ -45,4 +56,16 @@ class Login extends Component {
   }
 }
 
-export default Login;
+function mapStateToProps(state, ownProps) {
+    return {
+        user: state.user
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        action: bindActionCreators()
+    }
+}
+
+export default connect(mapStateToProps)(Login);

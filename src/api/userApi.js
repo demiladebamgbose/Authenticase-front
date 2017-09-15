@@ -1,16 +1,8 @@
-/**
- * Created by jolaadeadewale on 15/09/2017.
- */
  let  url = '';
-import {fetchUrl}  from 'fetch';
+import {fetchUrl} from 'fetch';
 
 class UserApi {
 
-<<<<<<< HEAD
-=======
-    // Dem Dem babay, you will have to change the url's and a few things
-    // :* with love. Jols
->>>>>>> set up redux
     createUser = (user)=> {
         return new Promise((resolve, reject)=> {
             return fetchUrl(url + 'api/v1/users' ,{
@@ -87,6 +79,43 @@ class UserApi {
         })
     };
 
+    followUser = (user) => {
+        return new Promise((resolve, reject) => {
+            return fetchUrl(url + 'api/v1/users/friend', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user)
+            }).then((response)=> response.json()).then((responseJson)=> {
+                if(responseJson.message.data)
+                    resolve(Object.assign({}, responseJson.message.data));
+                else{
+                    reject(Object.assign({}, responseJson.message.error));
+                }
+            })
+        });
+    };
+
+    unFollowUser = (user) => {
+        return new Promise((resolve, reject) => {
+            return fetchUrl(url + `api/v1/users/friend/${user.unfollow._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user)
+            }).then((response)=> response.json()).then((responseJson)=> {
+                if(responseJson.message.data)
+                    resolve(Object.assign({}, responseJson.message.data));
+                else{
+                    reject(Object.assign({}, responseJson.message.error));
+                }
+            })
+        });
+    };
 
     sendMessage = (obj) => {
         return new Promise((resolve, reject) => {
