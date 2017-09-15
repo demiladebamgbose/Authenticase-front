@@ -1,11 +1,12 @@
- let  url = '';
-import {fetchUrl} from 'fetch';
+
+let  url = '';
+import request from 'superagent';
 
 class UserApi {
 
     createUser = (user)=> {
         return new Promise((resolve, reject)=> {
-            return fetchUrl(url + 'api/v1/users' ,{
+            return request(url + 'api/v1/users' ,{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

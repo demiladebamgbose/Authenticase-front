@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as userActions from '../actions/UserActions';
+import * as userActions from '../actions/userActions';
 
 class Login extends Component {
 
@@ -64,8 +64,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        action: bindActionCreators()
+        action: bindActionCreators(userActions, dispatch)
     }
 }
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
