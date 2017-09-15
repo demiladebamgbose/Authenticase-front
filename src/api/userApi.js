@@ -6,6 +6,11 @@ import {fetchUrl}  from 'fetch';
 
 class UserApi {
 
+<<<<<<< HEAD
+=======
+    // Dem Dem babay, you will have to change the url's and a few things
+    // :* with love. Jols
+>>>>>>> set up redux
     createUser = (user)=> {
         return new Promise((resolve, reject)=> {
             return fetchUrl(url + 'api/v1/users' ,{
