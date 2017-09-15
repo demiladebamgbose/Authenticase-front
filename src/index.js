@@ -1,7 +1,13 @@
 import React from 'react';
+<<<<<<< HEAD
 import {render} from 'react-dom';
+=======
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom'
+>>>>>>> master
 import './index.css';
-import App from './App';
+import Routes from './routes/routes';
+import App from './App'
 import registerServiceWorker from './registerServiceWorker';
 import {Provider} from 'react-redux';
 import configureStore from './store/configureStore';
@@ -29,4 +35,11 @@ render(
     document.getElementById("root")
 ); */
 
+<<<<<<< HEAD
+=======
+ReactDOM.render(
+  <BrowserRouter >
+    <Routes/>
+  </BrowserRouter>, document.getElementById('root'));
+>>>>>>> master
 registerServiceWorker();

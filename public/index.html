@@ -10,6 +10,22 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <link rel="stylesheet" href = "%PUBLIC_URL%/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href = "%PUBLIC_URL%/css/bootstrap-wysihtml5.css">
+    <link rel="stylesheet" href = "%PUBLIC_URL%/css/bootstrap.min.css">
+    <link rel="stylesheet" href = "%PUBLIC_URL%/css/colorpicker.css">
+    <link rel="stylesheet" href = "%PUBLIC_URL%/css/datepicker.css">
+    <link rel="stylesheet" href = "%PUBLIC_URL%/css/font-awesome.css">
+    <link rel="stylesheet" href = "%PUBLIC_URL%/css/fullcalendar.css">
+    <link rel="stylesheet" href = "%PUBLIC_URL%/css/matrix-login.css">
+    <link rel="stylesheet" href = "%PUBLIC_URL%/css/matrix-media.css">
+    <link rel="stylesheet" href = "%PUBLIC_URL%/css/matrix-style.css">
+    <link rel="stylesheet" href = "%PUBLIC_URL%/public/css/select2.css">
+    <link rel="stylesheet" href = "%PUBLIC_URL%/css/uniform.css">
+    <link href="%PUBLIC_URL%/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -36,5 +52,53 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+
+    <script src="%PUBLIC_URL%/js/excanvas.min.js"></script>
+    <script src="%PUBLIC_URL%/js/jquery.min.js"></script>
+    <script src="%PUBLIC_URL%/js/jquery.ui.custom.js"></script>
+    <script src="%PUBLIC_URL%/js/bootstrap.min.js"></script>
+    <script src="%PUBLIC_URL%/js/jquery.flot.min.js"></script>
+    <script src="%PUBLIC_URL%/js/jquery.flot.resize.min.js"></script>
+    <script src="%PUBLIC_URL%/js/jquery.peity.min.js"></script>
+    <script src="%PUBLIC_URL%/js/fullcalendar.min.js"></script>
+    <script src="%PUBLIC_URL%/js/matrix.js"></script>
+    <script src="%PUBLIC_URL%/js/matrix.dashboard.js"></script>
+    <script src="%PUBLIC_URL%/js/jquery.gritter.min.js"></script>
+    <script src="%PUBLIC_URL%/js/matrix.interface.js"></script>
+    <script src="%PUBLIC_URL%/js/matrix.chat.js"></script>
+    <script src="%PUBLIC_URL%/js/jquery.validate.js"></script>
+    <script src="%PUBLIC_URL%/js/matrix.form_validation.js"></script>
+    <script src="%PUBLIC_URL%/js/jquery.wizard.js"></script>
+    <script src="%PUBLIC_URL%/js/jquery.uniform.js"></script>
+    <script src="%PUBLIC_URL%/js/select2.min.js"></script>
+    <script src="%PUBLIC_URL%/js/matrix.popover.js"></script>
+    <script src="%PUBLIC_URL%/js/jquery.dataTables.min.js"></script>
+    <script src="%PUBLIC_URL%/js/matrix.tables.js"></script>
+
+    <script type="text/javascript">
+      // This function is called from the pop-up menus to transfer to
+      // a different page. Ignore if the value returned is a null string:
+      function goPage (newURL) {
+
+          // if url is empty, skip the menu dividers and reset the menu selection to default
+          if (newURL != "") {
+
+              // if url is "-", it is this page -- reset the menu:
+              if (newURL == "-" ) {
+                  resetMenu();
+              }
+              // else, send page to designated URL
+              else {
+                document.location.href = newURL;
+              }
+          }
+      }
+
+    // resets the menu selection upon entry to this page:
+    function resetMenu() {
+       document.gomenu.selector.selectedIndex = 2;
+    }
+    </script>
   </body>
 </html>
