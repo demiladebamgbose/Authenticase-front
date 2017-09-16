@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as userActions from '../actions/userActions';
+
+
 
 class Login extends Component {
 
-
+    constructor(props){
+        super(props);
+        this.state = {
+            username: '',
+            password: ''
+        }
+    }
   render () {
 
     const loginBtnStyle = {
@@ -43,4 +54,16 @@ class Login extends Component {
   }
 }
 
-export default Login;
+function mapStateToProps(state, ownProps) {
+    return {
+        user: state.user
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        action: bindActionCreators(userActions, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
