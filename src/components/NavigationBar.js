@@ -4,13 +4,19 @@ import { Link } from 'react-router-dom';
 class NavigationBar extends Component {
 
   render () {
+
+    const header = {
+      padding:'15px'
+    }
+
+
     return (
       <div>
         <div id="header">
-        <h1><a href="dashboard.html">Matrix Admin</a></h1>
+          <div className="control-group normal_text" style={header}> <h4 id="login_header"><img height="40" width="40" src="/img/authenticase.jpg" alt="Logo" /> Authenticase</h4></div>
         </div>
 
-        <div id="user-nav" className="navbar navbar-inverse">
+        <div id="user-nav"  className="navbar navbar-inverse">
         <ul className="nav">
           <li  className="dropdown" id="profile-messages" ><a title="" href="/" data-toggle="dropdown" data-target="#profile-messages" className="dropdown-toggle"><i className="icon icon-user"></i>  <span className="text">Welcome User</span><b className="caret"></b></a>
             <ul className="dropdown-menu">
@@ -37,10 +43,6 @@ class NavigationBar extends Component {
         </ul>
         </div>
 
-        <div id="search">
-        <input type="text" placeholder="Search here..."/>
-        <button type="submit" className="tip-bottom" title="Search"><i className="icon-search icon-white"></i></button>
-        </div>
 
         <div id="sidebar"><a  className="visible-phone"><i className="icon icon-home"></i> Dashboard</a>
           <ul>

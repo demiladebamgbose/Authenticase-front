@@ -8,8 +8,7 @@ html, body{height:100%}
 /*Bootstrap-overlay*/
 
 body {
-	overflow-x: hidden;
-	margin-top: -10px; font-family: 'Open Sans', sans-serif; font-size:12px; color:#fff;
+	overflow-x: hidden; font-family: 'Open Sans', sans-serif; font-size:12px; color:#666;
 }
 a{color:#666;}
 a:hover, a:focus {
@@ -52,20 +51,16 @@ hr{ border-top-color:#dadada;}
 	width: 100%;
 	z-index: -9;
 }
-#header h1 {
-	background: url("../img/logo.png") no-repeat scroll 0 0 transparent;
-	height: 31px;
+#header h2 {
 	left: 20px;
-	line-height: 600px;
 	overflow: hidden;
 	position: relative;
 	top: 26px;
 	color: #fff;
-	width: 191px;
 }
-#header h1 a {
+/*#header h1 a {
 	display: block;
-}
+}*/
 /* Search input */
 #search {
 	position: absolute;
@@ -95,7 +90,7 @@ hr{ border-top-color:#dadada;}
 /* Top user navigation */
 #user-nav {
 	position: absolute;
-	left: 220px;
+	right:3px;
 	top:0px;
 	z-index: 20;
 	margin: 0;
@@ -238,6 +233,7 @@ hr{ border-top-color:#dadada;}
 }
 /* Breadcrumb */
 #breadcrumb {
+	margin-top: 13px;
 	background-color: #fff;
 	border-bottom: 1px solid #e3ebed;
 }
@@ -1283,7 +1279,7 @@ form {
 	left: auto;
 	right: auto;
 	width: 100%;
-	margin-top: -31px;
+	margin-top: 0px;
 	border-top:1px solid #363E48;
 	margin-bottom: 0px;
 	background:#2E363F;
