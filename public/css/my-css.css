@@ -1,7 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+}
 .form-label {
   margin-left: 10px;
 }
 .icon-asterisk {
   color: red;
   font-size: 7px;
+}
+
+.container{
+  width: 100%;
 }
