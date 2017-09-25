@@ -112,6 +112,21 @@ class Signup extends Component {
 
       this.props.action.createUser(user).then((value) => {
         console.log(value);
+        this.setState({
+            firstName: '',
+            lastName: '',
+            company : '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            userType: '',
+            dob: '',
+            phoneNumber: '',
+            error: {}
+
+          });
+        alert("A mail has been sent, verify your email to proceed");
+        console.log('back here');
 
         }).catch((err) => {
           console.log(err);

@@ -12,11 +12,13 @@ class UserApi {
           .set('Accept', 'application/json')
           .end(function(err, res) {
             // Calling the end function will send the request
+            if (!err) {
               console.log(res);
-            if(!res.user){
-
-            } else{
-                //resolve(Object.assign({}, { 'error': res.message.response}));
+              if(res.body.message) {
+                resolve(Object.assign({},  res.body.message.user));
+              } else{
+                  //resolve(Object.assign({}, { 'error': res.message.response}));
+              }
             }
         });
       });
