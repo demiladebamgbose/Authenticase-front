@@ -37,7 +37,7 @@ class Signup extends Component {
     let error = {};
 
     if (!this.state.userType) {
-      error.userType= 'Select one user type pleease';
+      error.userType= 'Are you joining as a handicapper or a bettor?';
       validated = false;
     }
 
@@ -52,13 +52,13 @@ class Signup extends Component {
       validated = false;
     }
 
-    if (!this.state.company) {
-      error.company =  'Company  name is required';
-      validated = false;
-    }
+    // if (!this.state.company) {
+    //   error.company =  'Company  name is required';
+    //   validated = false;
+    // }
 
     if (!/^.+@.+\..{2,3}$/.test(this.state.email)) {
-      error.email =  'Incorrect Email format';
+      error.email =  'Incorrect email format';
       validated = false;
     }
 
@@ -68,11 +68,14 @@ class Signup extends Component {
     }
 
     if (!/\d+/.test(this.state.phoneNumber)) {
-      error.phoneNumber =  'Phone numberis required';
+      error.phoneNumber =  'A valid phone number is required';
       validated = false;
     }
 
-    if (/(0[1-9]|1[012])\/(0[1-9]|1[0-9]|2[0-9]|3[01])\/\d{4}/.test(this.state.dob)) {
+    if (!
+        ((/(0[1-9]|1[012])\/(0[1-9]|1[0-9]|2[0-9]|3[01])\/\d{4}/.test(this.state.dob))
+        || (/^\d{4}[-/]\d{1,2}[-/]\d{1,2}$/.test(this.state.dob)))
+      ) {
       error.dob =  'Date of birth is required';
       validated = false;
     }
@@ -119,130 +122,142 @@ class Signup extends Component {
 
   render () {
 
-    const signupBtnStyle = {
-      margin:'auto',
-      width:'100px',
-      display:'block'
-    };
-
     const radioLabel = {
-      'marginLeft': '150px',
-      'width': '40px'
+      'width': '40px',
+      fontSize: '15px'
     };
 
     const radioBox = {
-      width: '350px',
-      margin: 'auto',
-      display: 'block',
       'marginTop': '14px',
+      color: '#666',
     };
 
-    return (
-        <div id="loginbox" >
-            <form id="loginform" className="form-vertical">
-				        <div className="control-group normal_text"> <h2 id="login_header"><img height="50" width="50" src="/img/authenticase.jpg" alt="Logo" /> Authenticase</h2></div>
-                <p className="help-block text-center"> Feilds marked with <i className="icon-asterisk" ></i>  are compulsory</p>
+    const errorBlock = {
+      color: '#d81748',
+      fontSize: '12px'
+    }
 
-                  <div style={radioBox}>
-                    <label className='radio-inline'>
+    return (
+        <div style={{width:'80%', margin:'auto', padding:'50px'}} className="z-depth-2 ">
+            <form className="form-vertical">
+				        <div className=" text-center" style={{color: '#fdcc52', marginBottom:'25px'}}> <h5 id="login_header"><img height="40" width="40" src="/img/authenticase.jpg" alt="Logo" /> Authenticase</h5></div>
+                <p className="help-block text-center" style={{fontSize: '12px'}}> Feilds marked with <i className="icon-asterisk" ></i>  are compulsory</p><hr/>
+
+
+
+                  <div style={radioBox} className="text-center">
+
+                    <p style={{display:'inline',  marginRight: '44px', fontSize: '15px'}} >
+                    <i className="fa fa-user-plus prefix grey-text" style={{ fontSize: '22px', lineHeight: '3', marginRight: '30px' }}>
+                    </i>Join us as a <i className="icon-asterisk" ></i></p>
+
+                    <label className='radio-inline' style={{fontSize: '15px'}}>
                     <input type="radio" name="userType"   value="Bettor" onChange={this.onValueChange}/> Bettor</label>
+
+                    <p style={{display:'inline', marginLeft:'50px', marginRight: '50px', fontSize: '15px'}}>or  </p>
+
                     <label className='radio-inline' style={radioLabel}>
                     <input type="radio" name="userType"  onChange={this.onValueChange} value="Handicapper"/> Handicapper</label>
-                    {this.state.error.userType && <span className="help-block">{this.state.error.userType}</span>}
+                    {this.state.error.userType && <span style= {errorBlock} className="help-block">{this.state.error.userType}</span>}
+                  </div>
+
+                  <div className="row ">
+                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
+                          <div className="md-form">
+                            <i className="fa fa-user prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
+                            <input type="text" id="firstName" className="form-control" onChange={this.onValueChange} name="firstName" value={this.state.firstName}/>
+                            <label >First Name <i className="icon-asterisk" ></i></label>
+                          </div>
+                          {this.state.error.firstName && <span style= {errorBlock} className="help-block">{this.state.error.firstName}</span>}
+                    </div>
+                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
+                          <div className="md-form">
+                            <i className="fa fa-user prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
+                            <input type="text" id="lastName" className="form-control" name="lastName" onChange={this.onValueChange} value={this.state.lastName}/>
+                            <label >Last Name <i className="icon-asterisk"></i> </label>
+                          </div>
+                          {this.state.error.lastName && <span style= {errorBlock} className="help-block">{this.state.error.lastName}</span>}
+                    </div>
+                  </div>
+
+                  <div className="row ">
+                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
+                          <div className="md-form">
+                            <i className="fa fa-envelope prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
+                            <input type="text" id="email" className="form-control" onChange={this.onValueChange} name="email" value={this.state.email}/>
+                            <label>Email address <i className="icon-asterisk" ></i></label>
+                          </div>
+                          {this.state.error.email && <span style= {errorBlock} className="help-block">{this.state.error.email}</span>}
+                    </div>
+                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
+                          <div className="md-form">
+                            <i className="fa fa-phone prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
+                            <input type="text" id="phoneNumber" className="form-control" name="phoneNumber" onChange={this.onValueChange} value={this.state.phoneNumber}/>
+                            <label >Phone number <i className="icon-asterisk"></i></label>
+                          </div>
+                          {this.state.error.phoneNumber && <span style= {errorBlock} className="help-block">{this.state.error.phoneNumber}</span>}
+                    </div>
+                  </div>
+
+                  <div className="row ">
+                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
+                          <div className="md-form">
+                            <div className="row">
+                            <div className="col-xs-1">
+                              <i className="fa fa-calendar prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
+                            </div>
+                              <div className="col-xs-4">
+                                <label style={{lineHeight:'3', marginLeft: '20px'}}> Date of birth <i className="icon-asterisk"></i></label>
+                              </div>
+                              <div className="col">
+                              <input type="date" id="dob" className="form-control"  placeholder="mm/dd/yyyy"onChange={this.onValueChange} name="dob" value={this.state.dob}/>
+                              </div>
+                            </div>
+                          </div>
+                          {this.state.error.dob && <span style= {errorBlock} className="help-block">{this.state.error.dob}</span>}
+                    </div>
+
+
+
+
+                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
+                          <div className="md-form">
+                            <i className="fa fa-th prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
+                            <input type="text" id="company" className="form-control" name="company" onChange={this.onValueChange} value={this.state.company}/>
+                            <label>Company name</label>
+                          </div>
+                          {this.state.error.company && <span style= {errorBlock} className="help-block">{this.state.error.company}</span>}
+                    </div>
                   </div>
 
 
+                  <div className="row ">
+                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
+                          <div className="md-form">
+                            <i className="fa fa-lock prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
+                            <input type="password" id="password" className="form-control" onChange={this.onValueChange} name="password" value={this.state.password}/>
+                            <label >Password <i className="icon-asterisk" ></i></label>
+                          </div>
+                          {this.state.error.password && <span style= {errorBlock} className="help-block">{this.state.error.password}</span>}
+                    </div>
+
+                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
+                          <div className="md-form">
+                            <i className="fa fa-lock prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
+                            <input type="text" id="confirmPassword" className="form-control" name="confirmPassword" onChange={this.onValueChange} value={this.state.confirmPassword}/>
+                            <label>Confirm Password <i className="icon-asterisk" ></i></label>
+                          </div>
+                    </div>
+                  </div>
 
 
+                  <div className="text-center">
+                   <button type="button" className="btn btn-danger" onClick={this.createUser}> Sign up <i className="fa fa-user-plus"> </i></button>
+                  </div>
 
-
-                <div className="control-group">
-                <label className= "form-label">First name <i className="icon-asterisk" ></i></label>
-                    <div className="controls">
-                        <div className="main_input_box">
-                            <span className="add-on bg_lg"><i className="icon-user"> </i></span>
-                            <input type="text" onChange={this.onValueChange} name="firstName" placeholder="First name" />
-                            {this.state.error.firstName && <span className="help-block">{this.state.error.firstName}</span>}
-                        </div>
-                    </div>
-                </div>
-                <div className="control-group">
-                <label className= "form-label">Last Name <i className="icon-asterisk" ></i> </label>
-                    <div className="controls">
-                        <div className="main_input_box">
-                            <span className="add-on bg_lg"><i className="icon-user"></i></span>
-                            <input type="text" onChange={this.onValueChange} name="lastName"  placeholder="Last name" />
-                            {this.state.error.lastName && <span className="help-block">{this.state.error.lastName}</span>}
-                        </div>
-                    </div>
-                </div>
-                <div className="control-group">
-                <label className= "form-label">Company name:</label>
-                    <div className="controls">
-                        <div className="main_input_box">
-                            <span className="add-on bg_lg"><i className="icon-th"></i></span>
-                            <input type="text" onChange={this.onValueChange} name="company" placeholder="Company name" />
-                            {this.state.error.company && <span className="help-block">{this.state.error.company}</span>}
-                        </div>
-                    </div>
-                </div>
-                <div className="control-group">
-                <label className= "form-label">Email address <i className="icon-asterisk" ></i></label>
-                    <div className="controls">
-                        <div className="main_input_box">
-                            <span className="add-on bg_lg"><i className="icon-envelope"></i></span>
-                            <input type="email" placeholder="Email address" onChange={this.onValueChange} name="email"/>
-                            {this.state.error.email && <span className="help-block">{this.state.error.email}</span>}
-                        </div>
-                    </div>
-                </div>
-                <div className="control-group">
-                    <label className= "form-label">Date of birth <i className="icon-asterisk" ></i></label>
-                    <div className="controls">
-                        <div className="main_input_box">
-                            <span className="add-on bg_lg"><i className="icon-calendar"></i></span>
-                            <input type="date" placeholder="mm/dd/yyyy" onChange={this.onValueChange} name="dob" />
-                            {this.state.error.dob && <span className="help-block">{this.state.error.dob}</span>}
-                        </div>
-                    </div>
-                </div>
-                <div className="control-group">
-                    <label className= "form-label">Phone number <i className="icon-asterisk" ></i></label>
-                    <div className="controls">
-                        <div className="main_input_box">
-                            <span className="add-on bg_lg"><i className="icon-phone"></i></span>
-                            <input type="tel" onChange={this.onValueChange} name="phoneNumber" placeholder="Phone number" />
-                            {this.state.error.phoneNumber && <span className="help-block">{this.state.error.phoneNumber}</span>}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="control-group">
-                <label className= "form-label">Password <i className="icon-asterisk" ></i></label>
-                    <div className="controls">
-                        <div className="main_input_box">
-                            <span className="add-on bg_lg"><i className="icon-lock"></i></span>
-                            <input type="password" placeholder="Password" onChange={this.onValueChange} name="password" />
-                            {this.state.error.password && <span className="help-block">{this.state.error.password}</span>}
-                        </div>
-                    </div>
-                </div>
-                <div className="control-group">
-                <label className= "form-label">Confirm password <i className="icon-asterisk" ></i></label>
-                    <div className="controls">
-                        <div className="main_input_box">
-                            <span className="add-on bg_lg"><i className="icon-lock"></i></span>
-                            <input type="password" placeholder="Confirm password"  onChange={this.onValueChange} name="confirmPassword"/>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="button"className="btn btn-success" style={signupBtnStyle} onClick={this.createUser}> Sign up</button>
-
-
-                <div className="form-actions">
-                <p className="help-block text-center"> Already Have an account? </p>
-                    <span><Link to='/login' type="submit"  style={signupBtnStyle} className="btn btn-info">Login</Link></span>
+                <div className="text-center" style={{marginTop:'20px'}}>
+                  <h5 className="help-block" > Already Have an account? </h5>
+                  <Link to='/login'> <button type="button"  className="btn btn-indigo">Login</button></Link>
                 </div>
             </form>
         </div>
@@ -264,4 +279,18 @@ function mapDispatchToProps(dispatch) {
 }
 
 
+
+
 export default connect (mapStateToProps, mapDispatchToProps)(Signup);
+
+
+
+// <div className="dropdown">
+//     <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown primary</button>
+//     <div className="dropdown-menu dropdown-primary">
+//         <a className="dropdown-item" value = "value">Action</a>
+//         <a className="dropdown-item">Another action</a>
+//         <a className="dropdown-item">Something else here</a>
+//         <a className="dropdown-item">Something else here</a>
+//     </div>
+// </div>
