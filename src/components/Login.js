@@ -47,7 +47,8 @@ class Login extends Component {
   }
 
 
-  _logInUser() {
+  _logInUser(e) {
+    e.preventDefault();
     if (this.state.validated) {
 
       const email = this.state.email;
@@ -67,41 +68,44 @@ class Login extends Component {
   }
 
   render () {
-
-    const loginBtnStyle = {
-      margin:'auto',
-      width:'100px',
-      display:'block'
-    };
+    //<div className="control-group normal_text"> <h2 id="login_header"><img height="50" width="50" src="/img/authenticase.jpg" alt="Logo" /> Authenticase</h2></div>
 
 
     return (
-        <div id="loginbox">
-            <form id="loginform" className="form-vertical">
-				        <div className="control-group normal_text"> <h2 id="login_header"><img height="50" width="50" src="/img/authenticase.jpg" alt="Logo" /> Authenticase</h2></div>
-                <div className="form-group control-group">
-                    <div className="controls">
-                        <div className="main_input_box">
-                            <span className="add-on bg_lg"><i className="icon-user"> </i></span><input type="text"  className="form-control"placeholder="Email address" name="email" onChange={this.onValueChange} value={this.state.email}/>
-                        </div>
-                        {this.state.error.email && <span className="help-block">{this.state.error.email}</span>}
-                    </div>
-                </div>
-                <div className="control-group">
-                    <div className="controls">
-                        <div className="main_input_box">
-                            <span className="add-on bg_ly"><i className="icon-lock"></i></span><input type="password" placeholder="Password"  name="password" onChange={ this.onValueChange } value={ this.state.password }/>
-                        </div>
-                        {this.state.error.password && <span className="help-block">{this.state.error.password}</span>}
-                    </div>
+        <div style = { styles.form } className="z-depth-2">
+            <form className="form-vertical">
+              <div>
+              <div className="control-group normal_text text-center" style={{color: '#fdcc52', marginBottom:'25px'}}> <h4><img height="40" width="40" src="/img/authenticase.jpg" alt="Logo" /> Authenticase</h4></div>
+                <div className="control-group normal_text text-center"> <h5><b> Log In</b></h5></div><hr/>
+
+
+                <div className="form-group " style={{margin:'20px', marginTop:'20px'}}>
+                      <div className="md-form">
+                        <i className="fa fa-envelope prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
+                        <input type="text" id="email" className="form-control"name="email" onChange={this.onValueChange} value={this.state.email}/>
+                        <label for="email">Email Address</label>
+                      </div>
+                      {this.state.error.email && <span style={styles.errorBlock} className="help-block">{this.state.error.email}</span>}
                 </div>
 
-                <button type="button" onClick={this.logInUser}className="btn btn-success" style={loginBtnStyle}> Log in</button>
+                <div className="form-group " style={{margin:'20px', marginTop:'40px'}}>
+                      <div className="md-form">
+                        <i className="fa fa-lock prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
+                        <input type="password" id="password" className="form-control" name="password" onChange={ this.onValueChange } value={ this.state.password }/>
+                        <label for="password">Password</label>
+                      </div>
+                      {this.state.error.password && <span style={styles.errorBlock} className="help-block">{this.state.error.password}</span>}
+                      <p className="font-small blue-text d-flex justify-content-end" style={{fontSize: '14px'}}>Forgot <a className="blue-text ml-1"> Password?</a></p>
 
-                <div className="form-actions">
-                    <span className="pull-left"><a className="flip-link btn btn-info" id="to-recover">Fogot password?</a></span>
-                    <span className="pull-right"> <Link to="/signup"><a type="submit"  className="btn btn-info"> or Sign up</a></Link></span>
                 </div>
+
+                <div className="text-center">
+                  <button onClick={this.logInUser} className="btn btn-indigo">Log in <i className="fa fa-sign-in ml-1"></i></button>
+              </div>
+
+                <h5 className="text-center" style={{margin:'15px'}}>OR</h5>
+                <div className="text-center"><Link to="/signup"><button className="btn btn-danger" type="button">Sign up</button></Link></div>
+              </div>
             </form>
         </div>
     );
@@ -118,6 +122,27 @@ function mapDispatchToProps(dispatch) {
     return {
         action: bindActionCreators(userActions, dispatch)
     }
+}
+
+const styles = {
+  form : {
+    width: '40%',
+    background: '#fff',
+    borderRadius: '5px',
+    padding: '40px',
+    margin:'auto',
+    display: 'block',
+    marginTop: '100px'
+  },
+  loginBtnStyle: {
+    margin:'auto',
+    width:'100px',
+    display:'block'
+  },
+  errorBlock: {
+    color: '#d81748',
+    fontSize: '12px'
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -8,21 +8,13 @@
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
     <link rel="stylesheet" href = "%PUBLIC_URL%/css/bootstrap-responsive.min.css">
     <link rel="stylesheet" href = "%PUBLIC_URL%/css/bootstrap-wysihtml5.css">
     <link rel="stylesheet" href = "%PUBLIC_URL%/css/bootstrap.min.css">
-    <link rel="stylesheet" href = "%PUBLIC_URL%/css/colorpicker.css">
-    <link rel="stylesheet" href = "%PUBLIC_URL%/css/datepicker.css">
-    <link rel="stylesheet" href = "%PUBLIC_URL%/css/font-awesome.css">
-    <link rel="stylesheet" href = "%PUBLIC_URL%/css/fullcalendar.css">
-    <link rel="stylesheet" href = "%PUBLIC_URL%/css/matrix-login.css">
-    <link rel="stylesheet" href = "%PUBLIC_URL%/css/matrix-media.css">
-    <link rel="stylesheet" href = "%PUBLIC_URL%/css/matrix-style.css">
-    <link rel="stylesheet" href = "%PUBLIC_URL%/public/css/select2.css">
-    <link rel="stylesheet" href = "%PUBLIC_URL%/css/uniform.css">
     <link href="%PUBLIC_URL%/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href = "%PUBLIC_URL%/css/new-age.css">
@@ -31,6 +23,7 @@
     <!-- Custom fonts for this template -->
     <link rel="stylesheet" href="%PUBLIC_URL%/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="%PUBLIC_URL%/vendor/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.2/css/mdb.min.css"/>
 
 
     <link rel="stylesheet" href = "%PUBLIC_URL%/css/my-css.css">
@@ -47,7 +40,7 @@
     -->
     <title>Authenticase</title>
   </head>
-  <body>
+  <body class="fixed-sn light-blue-skin">
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
@@ -64,39 +57,17 @@
     -->
 
 
+    <script type="text/javascript" src="js/mdb.min.js"></script>
     <script src="%PUBLIC_URL%/vendor/jquery/jquery.min.js"></script>
     <script src="%PUBLIC_URL%/vendor/popper/popper.min.js"></script>
     <script src="%PUBLIC_URL%/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.2/js/mdb.min.js"></script>
+
 
         <!-- Plugin JavaScript -->
     <script src="%PUBLIC_URL%/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 
     <script src="%PUBLIC_URL%/js/new-age.js"></script>
-    <script type="text/javascript">
-      // This function is called from the pop-up menus to transfer to
-      // a different page. Ignore if the value returned is a null string:
-
-      function goPage (newURL) {
-
-          // if url is empty, skip the menu dividers and reset the menu selection to default
-          if (newURL != "") {
-
-              // if url is "-", it is this page -- reset the menu:
-              if (newURL == "-" ) {
-                  resetMenu();
-              }
-              // else, send page to designated URL
-              else {
-                document.location.href = newURL;
-              }
-          }
-      }
-
-    // resets the menu selection upon entry to this page:
-    function resetMenu() {
-       document.gomenu.selector.selectedIndex = 2;
-    }
-    </script>
   </body>
 </html>
