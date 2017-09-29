@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Footer from './home/Footer';
 
 class Home extends Component {
 
@@ -57,8 +58,13 @@ class Home extends Component {
               <div className="container" >
                 <div className="row">
                   <div className="col-md-12 mx-auto">
-                    <h2 className="section-heading text-center">An online bet trading marketplace </h2>
-                    <p>enabling astute handicappers, bettors and sports enthusiasts to sell and buy all things sports and gambling picks</p>
+                    <h2 className="section-heading text-center"><b>Spreading The Benefits of Winning! </b></h2>
+                    <span>
+                      <input type="text" name="search" placeholder= "Search keywords"  style={{width: '500px', height: '12px', marginTop: '70px', marginBottom: '70px',color:'#333', backgroundColor:'#fff', border: '1px solid #fff', borderRadius:'2px', padding: '15px'}}/>
+                      <button type="button" className="btn btn-primary"><i className="fa fa-search"></i></button>
+                    </span>
+                    <p style={{fontSize: '18px'}}>Sell your sports picks or package to millions </p>
+                    <button style={{textTransform:'none'}} type="button" className="btn btn-primary">Post your pick </button>
                   </div>
                 </div>
               </div>
@@ -67,8 +73,7 @@ class Home extends Component {
             <section className="features" id="features">
               <div className="container">
                 <div className="section-heading text-center">
-                  <h1>How it works</h1>
-                  <p className="text-muted" style={{fontSize: '15px'}}>Authenticase is not a bookmaking, betting and online gambling company; it is merely a broker and receives percentage off service and success fees from both bettors and handicappers on picks purchased and picks confirmed successful respectively</p>
+                  <h1>Find thousands of sports picks & predictions</h1>
                   <hr/>
                 </div>
                 <div className="row">
@@ -131,56 +136,9 @@ class Home extends Component {
               </div>
             </section>
 
+            <Footer/>
 
 
-            <footer>
-              <div className="container" style={{padding:'20px', 'font-size': '20px'}}>
-                <div className="row" style={{padding:'20px'}}>
-
-                <div className="col">
-                  <ul style={{'list-style': 'none'}}>
-                    <li >
-                      <a href="/">About</a>
-                    </li>
-                    <li >
-                      <a href="/">Member benefits</a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="col">
-                  <ul style={{'list-style': 'none'}}>
-                    <li >
-                      <a href="/">Advertising</a>
-                    </li>
-                    <li >
-                      <a href="/">Help</a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="col">
-                  <ul style={{'list-style': 'none'}}>
-                    <li >
-                      <a href="/">Privacy policy</a>
-                    </li>
-                    <li >
-                      <a href="/">Terms of use</a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="col-sm-3">
-                  <ul style={{'list-style': 'none'}}>
-                    <li >
-                      <a href="/">Contact us</a>
-                    </li>
-                    <li >
-                      <a href="/">Download app</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-                <p>&copy; Authenticase.com 2017. All rights reserved.</p>
-              </div>
-            </footer>
         </div>
     );
   }

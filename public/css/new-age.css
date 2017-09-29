@@ -159,22 +159,33 @@ section.download {
   background-color: #eee;
   color: #fff;
   position: relative;
-  padding: 150px;
+  padding: 0px;
  }
 
-  section.download div {
+  section.download .container {
+    padding-top: 120px;
+    padding-bottom: 50px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: rgba(0, 0, 0, .3);
   }
 
   section.download div p{
     text-shadow: -1px -1px #000;
     font-size: 25px;
   }
-  section.download h2 {
+  section.download h3 {
     text-shadow: 1px -1px #000;
     font-size: 50px;
     margin:auto;
-    width: 50%;
+    width: 100%;
     margin-top: 30px; }
+
+    section.download input::-webkit-input-placeholder {
+      color: #999 !important;
+    }
   section.download .badges .badge-link {
     display: block;
     margin-bottom: 25px; }

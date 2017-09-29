@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as userActions from '../actions/userActions';
+import Footer from './home/Footer';
 
 
 
@@ -15,7 +16,8 @@ class Login extends Component {
           email: '',
           password: '',
           error: {},
-          validated: false
+          validated: false,
+          requestSent: false
       }
 
       this.onValueChange = this._onValueChanged.bind(this);
@@ -55,8 +57,15 @@ class Login extends Component {
       const password = this.state.password;
       const user = { email, password };
 
+      this.setState({requestSent: true});
+
       this.props.action.logUserIn(user).then((response) => {
-        console.log(this.props.user.presentUser);
+        this.setState({
+          email:'',
+          password: '',
+          requestSent: false
+        })
+        this.props.history.push('/dashboard');
       }).catch((err) => {
         console.log(err);
       });
@@ -68,11 +77,14 @@ class Login extends Component {
   }
 
   render () {
-    //<div className="control-group normal_text"> <h2 id="login_header"><img height="50" width="50" src="/img/authenticase.jpg" alt="Logo" /> Authenticase</h2></div>
-
-
     return (
-        <div style = { styles.form } className="z-depth-2">
+      <div>
+
+      { this.state.requestSent && <div className="preload"></div> }
+
+      { !this.state.requestSent &&
+      <div>
+        <div style = { styles.form } >
             <form className="form-vertical">
               <div>
               <div className="control-group normal_text text-center" style={{color: '#fdcc52', marginBottom:'25px'}}> <h4><img height="40" width="40" src="/img/authenticase.jpg" alt="Logo" /> Authenticase</h4></div>
@@ -82,7 +94,7 @@ class Login extends Component {
                 <div className="form-group " style={{margin:'20px', marginTop:'20px'}}>
                       <div className="md-form">
                         <i className="fa fa-envelope prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
-                        <input type="text" id="email" className="form-control"name="email" onChange={this.onValueChange} value={this.state.email}/>
+                        <input type="text" autoComplete="off" id="email" className="form-control"name="email" onChange={this.onValueChange} value={this.state.email}/>
                         <label for="email">Email Address</label>
                       </div>
                       {this.state.error.email && <span style={styles.errorBlock} className="help-block">{this.state.error.email}</span>}
@@ -103,11 +115,17 @@ class Login extends Component {
                   <button onClick={this.logInUser} className="btn btn-indigo">Log in <i className="fa fa-sign-in ml-1"></i></button>
               </div>
 
-                <h5 className="text-center" style={{margin:'15px'}}>OR</h5>
+                <section style={{borderTop: '1px solid #eee'}}>
+                  Already have an account?
+                </section>
                 <div className="text-center"><Link to="/signup"><button className="btn btn-danger" type="button">Sign up</button></Link></div>
               </div>
             </form>
         </div>
+        <Footer/>
+        </div>
+      }
+      </div>
     );
   }
 }
@@ -126,13 +144,11 @@ function mapDispatchToProps(dispatch) {
 
 const styles = {
   form : {
-    width: '40%',
+    width: '60%',
     background: '#fff',
     borderRadius: '5px',
-    padding: '40px',
-    margin:'auto',
-    display: 'block',
-    marginTop: '100px'
+    padding: '80px',
+    display: 'block'
   },
   loginBtnStyle: {
     margin:'auto',

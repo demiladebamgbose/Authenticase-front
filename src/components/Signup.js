@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Alert, Button } from 'react-bootstrap';
 import * as userActions  from '../actions/userActions';
+import Footer from "./home/Footer";
+
 
 
 class Signup extends Component {
@@ -20,12 +23,15 @@ class Signup extends Component {
       userType: '',
       dob: '',
       phoneNumber: '',
-      error: {}
+      error: {},
+      requestSent: false,
+      alertVisible: false
 
     }
 
     this.onValueChange = this._onValueChanged.bind(this);
     this.createUser = this._createUser.bind(this);
+    this.timeoutFunction = this.timeoutFunction.bind(this);
   }
 
   _onValueChanged (e) {
@@ -110,8 +116,9 @@ class Signup extends Component {
         phoneNumber:this.state.phoneNumber
       };
 
-      this.props.action.createUser(user).then((value) => {
-        console.log(value);
+      this.setState({requestSent: true});
+      this.props.action.createUser(user).then(() => {
+        this.setState({alertVisible: true});
         this.setState({
             firstName: '',
             lastName: '',
@@ -122,17 +129,26 @@ class Signup extends Component {
             userType: '',
             dob: '',
             phoneNumber: '',
-            error: {}
-
+            error: {},
+            requestSent: false
           });
-        alert("A mail has been sent, verify your email to proceed");
-        console.log('back here');
+
+
+          setTimeout(
+            this.timeoutFunction
+          , 300);
 
         }).catch((err) => {
           console.log(err);
         })
     }
 
+  }
+
+  timeoutFunction () {
+    console.log('back here');
+    this.setState({alertVisible: false});
+    this.props.history.push('/');
   }
 
   render () {
@@ -153,7 +169,27 @@ class Signup extends Component {
     }
 
     return (
+      <div>
+      {this.state.requestSent &&
+          <div className="preload"></div>
+      }
+
+
+      {!this.state.requestSent &&
+        <div>
         <div style={{width:'80%', margin:'auto', padding:'50px'}} className="z-depth-2 ">
+        { this.state.alertVisible &&
+          <Alert bsStyle="danger" onDismiss={this.handleAlertDismiss}>
+            <h4>Oh snap! You got an error!</h4>
+            <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+            <p>
+              <Button bsStyle="danger">Take this action</Button>
+              <span> or </span>
+              <Button onClick={this.handleAlertDismiss}>Hide Alert</Button>
+            </p>
+          </Alert>
+
+        }
             <form className="form-vertical">
 				        <div className=" text-center" style={{color: '#fdcc52', marginBottom:'25px'}}> <h5 id="login_header"><img height="40" width="40" src="/img/authenticase.jpg" alt="Logo" /> Authenticase</h5></div>
                 <p className="help-block text-center" style={{fontSize: '12px'}}> Feilds marked with <i className="icon-asterisk" ></i>  are compulsory</p><hr/>
@@ -276,6 +312,10 @@ class Signup extends Component {
                 </div>
             </form>
         </div>
+        <Footer/>
+        </div>
+      }
+      </div>
     );
   }
 }

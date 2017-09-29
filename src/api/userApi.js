@@ -4,7 +4,6 @@ let  url = 'https://gentle-fortress-32163.herokuapp.com/';
 class UserApi {
 
     createUser = (user)=> {
-
       return new Promise((resolve, reject)=> {
         request
           .post(url + 'api/v1/users')
@@ -34,6 +33,27 @@ class UserApi {
           .end(function(err, res){
             // Calling the end function will send the request
               console.log(res);
+            if(res.body.message.user)
+                resolve(Object.assign({}, res.body.message.user));
+            else{
+                //resolve(Object.assign({}, { 'error': res.message.response}));
+            }
+          });
+
+      });
+    };
+
+
+    verfyUser =(email)=> {
+      return new Promise((resolve, reject) => {
+
+        request
+          .post(url + 'api/v1/users/verify')
+          .send(email)
+          .set('Accept', 'application/json')
+          .end(function(err, res){
+            // Calling the end function will send the request
+              console.log(res);
             if(!res.user)
                 resolve(Object.assign({}, {email: 'demiladebam@gmail.com', password: 'password'}));
             else{
@@ -42,27 +62,6 @@ class UserApi {
           });
 
       });
-
-
-        // return new Promise((resolve, reject)=> {
-        //     return request(url + 'api/v1/users/login' ,{
-        //         method: 'POST',
-        //         headers: {
-        //             'Accept': 'application/json',
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify(user)
-        //     })
-        //         .then((response) => response.json())
-        //         .then((responseJson) => {
-        //             if(responseJson.message.response === 'user logged in') {
-        //                 resolve(Object.assign({}, responseJson.message.user));
-        //             }
-        //             else{
-        //                 resolve(Object.assign({}, { 'error': responseJson.message.response}));
-        //             }
-        //         });
-        // });
     };
 
     findAll = () => {
