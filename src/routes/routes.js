@@ -5,6 +5,8 @@ import App from './../App.js';
 import Login from './../components/Login';
 import Home from './../components/Home';
 import Signup from './../components/Signup';
+import Center from './../components/Center';
+import Verify from './../components/Verify';
 
 const Routes =  () => (
   <routes>
@@ -13,6 +15,7 @@ const Routes =  () => (
       <Route path='/login' component={ Login }/>
       <Route path='/dashboard' component={ App }/>
       <Route path='/signup' component={ Signup }/>
+      <Route path='/verify/:email' component={ Verify }/>
     </Switch>
   </routes>
 );

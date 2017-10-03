@@ -1,23 +1,21 @@
-import  React, { Component } from 'react';
 
-class Center extends Component {
-
-  render () {
-    return (
-
-        <div className=" container container-fluid mt-5" style={{marginLeft: '250px'}}>
-            <h2>Advanced Double Navigation with fixed SideNav & fixed Navbar: fsgdh fg jhk jsfdfghjgf dfhjkhgfdhjkhhgfhjkhgfhjkgfhjgj</h2>
-            <br/>
-            <h5>1. Fixed side menu, hidden on small devices.</h5>
-            <h5>2. Fixed Navbar. It will always stay visible on the top, even when you scroll down.</h5>
-            <div style={{"height": "2000px"}}></div>
-        </div>
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 
-    );
+import Handicapper from './dashboard/handicapper/home';
+import AddPost from './dashboard/handicapper/addPost';
+import Bettor from './dashboard/bettor/home'
 
-  }
-
-}
+const Center =  () => (
+  <routes>
+    <Switch>
+      <Route path='/dashboard/bettor' component={ Bettor }/>
+      <Route exact path='/dashboard/handicapper' component={ Handicapper }/>
+      <Route exact path='/dashboard/handicapper/newpost' component={ AddPost }/>
+    </Switch>
+  </routes>
+);
 
 export default Center;

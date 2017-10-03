@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import Script from 'react-load-script';
 import * as userActions from '../actions/userActions';
+import Signup from './Signup';
 
-
+import './../styles/bootstrap/dist/css/bootstrap.css';
+import './../styles/font-awesome/css/font-awesome.css';
+import './../styles/custom.css';
 
 
 class Login extends Component {
@@ -15,7 +19,8 @@ class Login extends Component {
           email: '',
           password: '',
           error: {},
-          validated: false
+          validated: false,
+          requestSent: false
       }
 
       this.onValueChange = this._onValueChanged.bind(this);
@@ -46,7 +51,6 @@ class Login extends Component {
     this.setState({ validated: true , error: {} });
   }
 
-
   _logInUser(e) {
     e.preventDefault();
     if (this.state.validated) {
@@ -67,50 +71,72 @@ class Login extends Component {
 
   }
 
-  render () {
-    //<div className="control-group normal_text"> <h2 id="login_header"><img height="50" width="50" src="/img/authenticase.jpg" alt="Logo" /> Authenticase</h2></div>
-
-
+  render() {
     return (
-        <div style = { styles.form } className="z-depth-2">
-            <form className="form-vertical">
-              <div>
-              <div className="control-group normal_text text-center" style={{color: '#fdcc52', marginBottom:'25px'}}> <h4><img height="40" width="40" src="/img/authenticase.jpg" alt="Logo" /> Authenticase</h4></div>
-                <div className="control-group normal_text text-center"> <h5><b> Log In</b></h5></div><hr/>
 
 
-                <div className="form-group " style={{margin:'20px', marginTop:'20px'}}>
-                      <div className="md-form">
-                        <i className="fa fa-envelope prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
-                        <input type="text" id="email" className="form-control"name="email" onChange={this.onValueChange} value={this.state.email}/>
-                        <label for="email">Email Address</label>
+      <div>
+        {this.state.requestSent && <div className="preload"></div>}
+
+        {!this.state.requestSent &&
+          <div className="login">
+
+             <a className="hiddenanchor" id="signup"></a>
+             <a className="hiddenanchor" id="signin"></a>
+              <div className="login_wrapper">
+              <div className="animate form login_form">
+                <section className="login_content" style={{ textDecoration:'none' }}>
+                  <form>
+                    <h1>Login</h1>
+                    <div>
+                      <input type="text" className="form-control" placeholder="Email address" name="email" onChange={this.onValueChange} value={this.state.email} required="" />
+                      {this.state.error.email && <span style={{marginTop: "-18px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.email}</span>}
+                    </div>
+                    <div>
+                      <input type="password" className="form-control" placeholder="Password" name="password" onChange={ this.onValueChange } value={ this.state.password } required="" />
+                      {this.state.error.password && <span style={{marginTop: "-18px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.password}</span>}
+                    </div>
+                    <div>
+                      <a className="btn btn-success submit" type="submit" style={{ textDecoration:'none' }}>Log in</a>
+                      <a className="reset_pass" href="" style={{color:'#7585D9'}}>Lost your password?</a>
+                    </div>
+
+                    <div className="clearfix"></div>
+
+                    <div className="separator">
+                      <p className="change_link">New to Authenticase?
+                        <a href="#signup" className="to_register" style={{color:'#7585D9'}}> Create an Authenticase account </a>
+                      </p>
+
+                      <div className="clearfix"></div>
+                      <br />
+
+                      <div>
+                      <p>© 2008-2017, Authenticase.com , Inc</p>
                       </div>
-                      {this.state.error.email && <span style={styles.errorBlock} className="help-block">{this.state.error.email}</span>}
-                </div>
-
-                <div className="form-group " style={{margin:'20px', marginTop:'40px'}}>
-                      <div className="md-form">
-                        <i className="fa fa-lock prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
-                        <input type="password" id="password" className="form-control" name="password" onChange={ this.onValueChange } value={ this.state.password }/>
-                        <label for="password">Password</label>
-                      </div>
-                      {this.state.error.password && <span style={styles.errorBlock} className="help-block">{this.state.error.password}</span>}
-                      <p className="font-small blue-text d-flex justify-content-end" style={{fontSize: '14px'}}>Forgot <a className="blue-text ml-1"> Password?</a></p>
-
-                </div>
-
-                <div className="text-center">
-                  <button onClick={this.logInUser} className="btn btn-indigo">Log in <i className="fa fa-sign-in ml-1"></i></button>
+                    </div>
+                  </form>
+                </section>
               </div>
+              <Signup/>
+            </div>
+          </div>
+        }
 
-                <h5 className="text-center" style={{margin:'15px'}}>OR</h5>
-                <div className="text-center"><Link to="/signup"><button className="btn btn-danger" type="button">Sign up</button></Link></div>
-              </div>
-            </form>
-        </div>
-    );
+        <Script url="/vendor/fastclick/lib/fastclick.js"/>
+        <Script url="/vendor/nprogress/nprogress.js"/>
+        <Script url="/vendor/jQuery-Smart-Wizard/js/jquery.smartWizard.js"/>
+        <Script url="/vendor/custom.js"/>
+      </div>
+
+
+
+
+
+    )
   }
 }
+
 
 function mapStateToProps(state, ownProps) {
     return {
@@ -122,27 +148,6 @@ function mapDispatchToProps(dispatch) {
     return {
         action: bindActionCreators(userActions, dispatch)
     }
-}
-
-const styles = {
-  form : {
-    width: '40%',
-    background: '#fff',
-    borderRadius: '5px',
-    padding: '40px',
-    margin:'auto',
-    display: 'block',
-    marginTop: '100px'
-  },
-  loginBtnStyle: {
-    margin:'auto',
-    width:'100px',
-    display:'block'
-  },
-  errorBlock: {
-    color: '#d81748',
-    fontSize: '12px'
-  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

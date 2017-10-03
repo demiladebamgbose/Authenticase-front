@@ -22,3 +22,9 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+@@import "./index.css";
+@@import "./styles/animate.css";
+@@@import "./styles/css/custom.min.css";
+@@import "./styles/bootstrap/dist/css/bootstrap.min.css";
+@@import "./styles/font-awesome/css/font-awesome.min.css"
