@@ -284,15 +284,6 @@ export default connect (mapStateToProps, mapDispatchToProps)(Signup);
 
 
 
-// <div className="dropdown">
-//     <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown primary</button>
-//     <div className="dropdown-menu dropdown-primary">
-//         <a className="dropdown-item" value = "value">Action</a>
-//         <a className="dropdown-item">Another action</a>
-//         <a className="dropdown-item">Something else here</a>
-//         <a className="dropdown-item">Something else here</a>
-//     </div>
-// </div>
 */
 
 import React,{Component} from 'react';
@@ -301,6 +292,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions  from '../actions/userActions';
 import Script from 'react-load-script';
+import $ from 'jquery';
 import '../styles/iCheck/skins/flat/green.css';
 import '../styles/select2/dist/css/select2.css';
 import '../styles/switchery/dist/switchery.css';
@@ -313,7 +305,8 @@ class Signup extends Component {
 
     this.state = {
       firstName: '',lastName: '',company : '',email: '',password: '',
-      confirmPassword: '',userType: '',dob: '',phoneNumber: '',error: {}
+      confirmPassword: '',userType: '',dob: '',phoneNumber: '',error: {},
+      requestSent:false
 
     }
     this.onValueChange = this._onValueChanged.bind(this);
@@ -321,6 +314,14 @@ class Signup extends Component {
   }
 
   componentDidMount () {
+    console.log(this.props);
+
+    // var wizard = $("#wizard").steps({
+    //   onFinished: function (event, currentIndex) {
+    //     console.log("I set this in the constructor -- all finished");
+    //     this.createUser();
+    //   }
+    // });
   }
 
   _onValueChanged (e) {
@@ -331,10 +332,11 @@ class Signup extends Component {
     let validated = true;
     let error = {};
 
-    if (!this.state.userType) {
-      error.userType= 'Are you joining as a handicapper or a bettor?';
-      validated = false;
-    }
+    // if (!this.state.userType) {
+    //   error.userType= 'Are you joining as a handicapper or a bettor?';
+    //   console.log(this.state)
+    //   validated = false;
+    // }
 
 
     if (!this.state.firstName) {
@@ -388,148 +390,167 @@ class Signup extends Component {
   }
 
   _createUser (e) {
-    let validated = this._validateForm();
-    let dob = new Date(this.state.dob).toUTCString();
-    console.log(dob);
-    if (validated) {
-      const user = {
-        name: {
-          firstName : this.state.firstName,
-          lastName: this.state.lastName
-        },
-        company: this.state.company,
-        email: this.state.email,
-        dob: dob,
-        userType:this.state.userType,
-        password: this.state.password,
-        phoneNumber:this.state.phoneNumber
-      };
+     let validated = this._validateForm();
+     let dob = new Date(this.state.dob).toUTCString();
+     if (validated) {
+       const user = {
+         name: {
+           firstName : this.state.firstName,
+           lastName: this.state.lastName
+         },
+         company: this.state.company,
+         email: this.state.email,
+         dob: dob,
+         userType:"Handicapper",
+         password: this.state.password,
+         phoneNumber:this.state.phoneNumber
+       };
 
-      this.props.action.createUser(user).then((value) => {
-        console.log(value);
+       this.setState({requestSent: true});
+       this.props.action.createUser(user).then(() => {
+         this.setState({alertVisible: true});
+         this.setState({
+             firstName: '',
+             lastName: '',
+             company : '',
+             email: '',
+             password: '',
+             confirmPassword: '',
+             userType: '',
+             dob: '',
+             phoneNumber: '',
+             error: {},
+             requestSent: false
+           });
 
-        }).catch((err) => {
-          console.log(err);
-        })
+
+          this.props.parentProps.history.push("/dashboard/handicapper");
+
+
+         }).catch((err) => {
+           console.log(err);
+         })
+      }
+
     }
-
-  }
 
   render () {
     return (
+
+      <div >
+      {this.state.requestSent && <div className="preload" style={{margin:"500px, 0px, 300px, 0"}}></div>}
+      {!this.state.requestSent &&
+
+
+
+
       <div id="register" className="animate form registration_form">
-                <section className="login_content" style={{width:'375px', margin:'auto',  }}>
 
-                <form className="form-horizontal form-label-left">
-                 <h1>Create Account</h1>
+        <section className="login_content" style={{width:'375px', margin:'auto',  }}>
 
-                      <div id="wizard" className="form_wizard wizard_horizontal" >
-                          <ul className="wizard_steps" >
-                              <li>
-                                 <a href="#step-1" style={{ textDecoration:'none' }}>
-                                    <span className="step_no">1</span>
-                                    <span className="step_descr">
-                                      <small>Basic Information</small><br />
-                                    </span>
-                                  </a>
-                                </li>
-                              <li>
-                                <a href="#step-2" style={{ textDecoration:'none' }}>
-                                   <span className="step_no">2</span>
-                                   <span className="step_descr">
-                                      <small>Additional Information</small><br />
-                                   </span>
-                                </a>
-                              </li>
-                              <li>
-                                 <a href="#step-3" style={{ textDecoration:'none' }}>
-                                   <span className="step_no">3</span>
-                                     <span className="step_descr">
-                                       <small>Set password</small><br />
-                                     </span>
-                                   </a>
-                                 </li>
-                                </ul>
+        <form className="form-horizontal form-label-left">
+         <h1>Create Account</h1>
 
-                               <div id="step-1">
-                                 <div className="row" style={{margin: '30px'}}>
-                                   <div className="radio" style={{display:'inline'}}>
-                                      <label>
-                                        <input type="radio" className="flat" name="iCheck"/> Bettor
-                                      </label>
-                                    </div>
-                                    <div className="radio" style={{display:'inline', marginLeft:'100px'}}>
-                                       <label>
-                                         <input type="radio" className="flat" name="iCheck"/> Handicapper
-                                       </label>
-                                     </div>
-                                 </div>
-
-                                 <div>
-                                   <input type="text" className="form-control" placeholder="First Name" required />
-                                 </div>
-                                 <div>
-                                   <input type="text" className="form-control" placeholder="Last Name" required />
-                                 </div>
-                                 <div>
-                                   <input type="email" className="form-control" placeholder="Email" required />
-                                 </div>
+              <div className="form_wizard wizard_horizontal" >
 
 
-
-                               </div>
-                               <div id="step-2">
-                                 <div>
-                                   <input type="text" className="form-control" placeholder="Phone Number" required />
-                                 </div>
-
-                                 <div>
-                                   <input type="email" className="form-control" placeholder="Company Name" required />
-                                 </div>
-
-                                 <div>
-
-                                   <p style={{textAlign:"left" }}>Date of birth</p>
-                                     <input type="date" className="form-control" placeholder="Date of birth" required />
-
-                                 </div>
-                               </div>
-                               <div id="step-3">
-                                 <div>
-                                   <input type="password" className="form-control" placeholder="Password" required />
-                                 </div>
-                                 <div>
-                                   <input type="password" className="form-control" placeholder="Confirm Password" required />
-                                 </div>
-
-                               </div>
-
+                       <div id="step-1">
+                         <div className="row" style={{margin: '30px'}}>
+                           <div className="radio" style={{display:'inline'}}>
+                              <label>
+                                <input type="radio" className="flat" name="userType"   value="Bettor" onChange={this.onValueChange}/> Bettor
+                              </label>
+                            </div>
+                            <div className="radio" style={{display:'inline', marginLeft:'100px'}}>
+                               <label>
+                                 <input type="radio" className="flat"  name="userType"   value="Handicapper" onChange={this.onValueChange}/> Handicapper
+                               </label>
                              </div>
 
+                         </div>
+                         {this.state.error.userType && <span style={{marginTop: "-18px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.userType}</span>}
 
-                             <div className="clearfix"></div>
+                         <div>
+                           <input type="text" className="form-control" placeholder="First Name" required onChange={this.onValueChange} name="firstName" value={this.state.firstName} />
+                           {this.state.error.firstName && <span style={{marginTop: "-18px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.firstName}</span>}
 
-                             <div className="separator">
-                               <p className="change_link">Already a member ?
-                                 <a href="#signin" className="to_register" style={{color:'#7585D9'}}> Log in </a>
-                               </p>
+                         </div>
+                         <div>
+                           <input type="text" className="form-control" placeholder="Last Name" required name="lastName" onChange={this.onValueChange} value={this.state.lastName}/>
+                           {this.state.error.lastName && <span style={{marginTop: "-18px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.lastName}</span>}
+                         </div>
+                         <div>
+                           <input type="email" className="form-control" placeholder="Email" required  onChange={this.onValueChange} name="email" value={this.state.email}/>
+                           {this.state.error.email && <span style={{marginTop: "-18px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.email}</span>}
+                         </div>
 
-                               <div className="clearfix"></div>
-                               <br />
 
-                      <div>
-                      <div className="clearfix"></div> <hr/>
-                        <p>© 2008-2017, Authenticase.com , Inc</p>
-                      </div>
-                    </div>
 
-                    <Script url="/vendor/iCheck/icheck.js"/>
-                    <Script url="/vendor/select2/dist/js/select2.js"/>
-                    <Script url="/vendor/starrr/dist/starrr.js"/>
-                    <Script url="/vendor/switchery/dist/switchery.js"/>
-                    </form>
-                </section>
+                       </div>
+                       <div id="step-2">
+                         <div>
+                           <input type="text" className="form-control" placeholder="Phone Number" required name="phoneNumber" onChange={this.onValueChange} value={this.state.phoneNumber}/>
+
+                           {this.state.error.phoneNumber && <span style={{marginTop: "-18px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.phoneNumber}</span>}
+                         </div>
+
+                         <div>
+                           <input type="email" className="form-control" placeholder="Company Name" required name="company" onChange={this.onValueChange} value={this.state.company}/>
+                         </div>
+
+                         <div>
+
+                           <p style={{textAlign:"left" }}>Date of birth</p>
+                             <input type="date" className="form-control" style={{marginBottom:'15px'}}placeholder="Date of birth" required placeholder="mm/dd/yyyy"onChange={this.onValueChange} name="dob" value={this.state.dob}/>
+
+                             {this.state.error.dob && <span style={{marginTop: "-13px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.dob}</span>}
+
+                         </div>
+                       </div>
+
+                         <div>
+                           <input type="password" className="form-control" placeholder="Password" required  onChange={this.onValueChange} name="password" value={this.state.password}/>
+                           {this.state.error.password && <span style={{marginTop: "-18px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.password}</span>}
+                         </div>
+                         <div>
+                           <input type="password" className="form-control" placeholder="Confirm Password" required name="confirmPassword" onChange={this.onValueChange} value={this.state.confirmPassword} />
+                         </div>
+
+                         <div className="form-group text-center">
+                         <button type="button" className="btn btn-default" onClick={this.createUser}>Sign up</button>
+                         </div>
+
+                     </div>
+
+
+                     <div className="clearfix"></div>
+
+                     <div className="separator">
+                       <p className="change_link">Already a member ?
+                         <a href="#signin" className="to_register" style={{color:'#7585D9'}}> Log in </a>
+                       </p>
+
+                       <div className="clearfix"></div>
+                       <br />
+
+              <div>
+              <div className="clearfix"></div> <hr/>
+                <p>© 2008-2017, Authenticase.com , Inc</p>
               </div>
+            </div>
+
+
+            </form>
+        </section>
+        </div>
+       }
+
+       <Script url="/vendor/iCheck/icheck.js"/>
+       <Script url="/vendor/select2/dist/js/select2.js"/>
+       <Script url="/vendor/starrr/dist/starrr.js"/>
+       <Script url="/vendor/switchery/dist/switchery.js"/>
+
+      </div>
     )
   }
 }

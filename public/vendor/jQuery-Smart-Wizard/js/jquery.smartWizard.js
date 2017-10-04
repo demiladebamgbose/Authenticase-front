@@ -66,7 +66,8 @@ function SmartWizard(target, options) {
             $this.goBackward();
             return false;
         });
-        $($this.buttons.finish).click(function() {
+        $($this.buttons.finish).click(function(e) {
+          e.preventDefault();
             if(!$(this).hasClass('buttonDisabled')){
                 if($.isFunction($this.options.onFinish)) {
                     var context = { fromStep: $this.curStepIdx + 1 };
@@ -74,7 +75,9 @@ function SmartWizard(target, options) {
                         return false;
                     }
                 }else{
+                  console.log("got here");
                     var frm = $this.target.parents('form');
+                    console.log(frm);
                     if(frm && frm.length){
                         frm.submit();
                     }

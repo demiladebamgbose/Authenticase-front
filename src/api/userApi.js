@@ -12,12 +12,14 @@ class UserApi {
           .set('Accept', 'application/json')
           .end(function(err, res) {
             // Calling the end function will send the request
-              console.log(res);
-            if(!res.user){
-
-            } else{
-                //resolve(Object.assign({}, { 'error': res.message.response}));
-            }
+              if (!err) {
+                console.log(res);
+                if(res.body.message) {
+                  resolve(Object.assign({},  res.body.message.user));
+                } else{
+                    //resolve(Object.assign({}, { 'error': res.message.response}));
+                }
+              }
         });
       });
     };
@@ -31,36 +33,17 @@ class UserApi {
           .set('Accept', 'application/json')
           .end(function(err, res){
             // Calling the end function will send the request
+            if (!err) {
               console.log(res);
-            if(!res.user)
-                resolve(Object.assign({}, {email: 'demiladebam@gmail.com', password: 'password'}));
-            else{
-                //resolve(Object.assign({}, { 'error': res.message.response}));
+              if(res.body.message) {
+                resolve(Object.assign({},  res.body.message.user));
+              } else{
+                  //resolve(Object.assign({}, { 'error': res.message.response}));
+              }
             }
           });
 
       });
-
-
-        // return new Promise((resolve, reject)=> {
-        //     return request(url + 'api/v1/users/login' ,{
-        //         method: 'POST',
-        //         headers: {
-        //             'Accept': 'application/json',
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify(user)
-        //     })
-        //         .then((response) => response.json())
-        //         .then((responseJson) => {
-        //             if(responseJson.message.response === 'user logged in') {
-        //                 resolve(Object.assign({}, responseJson.message.user));
-        //             }
-        //             else{
-        //                 resolve(Object.assign({}, { 'error': responseJson.message.response}));
-        //             }
-        //         });
-        // });
     };
 
     findAll = () => {

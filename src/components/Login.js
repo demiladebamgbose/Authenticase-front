@@ -59,8 +59,15 @@ class Login extends Component {
       const password = this.state.password;
       const user = { email, password };
 
+      this.setState({requestSent: true});
+
       this.props.action.logUserIn(user).then((response) => {
-        console.log(this.props.user.presentUser);
+        this.setState({
+          email:'',
+          password: '',
+          requestSent: false
+        })
+        this.props.history.push('/dashboard/handicapper');
       }).catch((err) => {
         console.log(err);
       });
@@ -70,6 +77,7 @@ class Login extends Component {
     }
 
   }
+
 
   render() {
     return (
@@ -97,7 +105,7 @@ class Login extends Component {
                       {this.state.error.password && <span style={{marginTop: "-18px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.password}</span>}
                     </div>
                     <div>
-                      <a className="btn btn-success submit" type="submit" style={{ textDecoration:'none' }}>Log in</a>
+                      <a className="btn btn-success submit" onClick={this.logInUser}  style={{ textDecoration:'none' }}>Log in</a>
                       <a className="reset_pass" href="" style={{color:'#7585D9'}}>Lost your password?</a>
                     </div>
 
@@ -118,7 +126,7 @@ class Login extends Component {
                   </form>
                 </section>
               </div>
-              <Signup/>
+              <Signup parentProps={this.props}/>
             </div>
           </div>
         }
