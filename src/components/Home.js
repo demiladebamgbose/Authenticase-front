@@ -235,7 +235,6 @@ class Home extends Component {
                 </div>
             </section>
 
-            <Footer/>
 
 
 
