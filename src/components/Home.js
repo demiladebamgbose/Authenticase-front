@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+
 import $ from 'jquery';
 import Script from 'react-load-script';
 import Header from './dashboard/common/header/index'
 
 import './../styles/my-css.css';
+
+import Footer from './home/Footer';
+
 
 
 class Home extends Component {
@@ -181,6 +185,7 @@ class Home extends Component {
               <div className="container">
                 <div className="section-heading text-center">
                   <h1>How it works</h1>
+
                 </div>
                 <div className="row">
                   <div className="col-sm-6" style={ howitworks }>
@@ -229,6 +234,8 @@ class Home extends Component {
                   </div>
                 </div>
             </section>
+
+            <Footer/>
 
 
 
@@ -284,6 +291,7 @@ class Home extends Component {
             <Script url="vendor/bootstrap/js/bootstrap.js"/>
             <Script url="vendor/jquery-easing/jquery.easing.js"/>
             <Script url="js/new-age.js"/>
+
         </div>
     );
   }

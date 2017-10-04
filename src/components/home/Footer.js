@@ -5,7 +5,7 @@ class Footer extends Component {
 
   render () {
     return  (
-      <Footer>
+      <footer>
         <div className="container" style={{padding:'20px', 'font-size': '20px'}}>
           <div className="row" style={{padding:'20px'}}>
 
@@ -52,7 +52,7 @@ class Footer extends Component {
         </div>
           <p>&copy; Authenticase.com 2017. All rights reserved.</p>
         </div>
-      </Footer>
+      </footer>
     );
   }
 }
