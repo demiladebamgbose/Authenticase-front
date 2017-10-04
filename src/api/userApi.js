@@ -11,6 +11,7 @@ class UserApi {
           .set('Accept', 'application/json')
           .end(function(err, res) {
             // Calling the end function will send the request
+
             if (!err) {
               console.log(res);
               if(res.body.message) {
@@ -19,6 +20,7 @@ class UserApi {
                   //resolve(Object.assign({}, { 'error': res.message.response}));
               }
             }
+
         });
       });
     };
@@ -32,15 +34,20 @@ class UserApi {
           .set('Accept', 'application/json')
           .end(function(err, res){
             // Calling the end function will send the request
+            if (!err) {
               console.log(res);
-            if(res.body.message.user)
-                resolve(Object.assign({}, res.body.message.user));
+
+            if(res.body.message.user){
+                resolve(Object.assign({}, res.body.message.user));}
             else{
                 //resolve(Object.assign({}, { 'error': res.message.response}));
-            }
-          });
 
+            }
+          }
+        });
       });
+
+
     };
 
 
@@ -62,6 +69,7 @@ class UserApi {
           });
 
       });
+
     };
 
     findAll = () => {

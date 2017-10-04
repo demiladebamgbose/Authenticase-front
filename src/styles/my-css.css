@@ -1,0 +1,47 @@
+
+.jumbotron{
+  height: 540px;
+  color: #fff;
+  padding: 0;
+  margin: 0;
+  background-repeat:no-repeat;
+  background-size:cover;
+  -ms-background-size: cover;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  background-image: url("/img/hd-wallpaper.jpg");
+}
+.overlay{
+  height: 100%;
+  padding: 150px;
+  background: rgba(0, 0, 0, 0.6)
+}
+section{
+  padding: 50px;
+}
+.section-heading{
+  margin: 40px;
+}
+
+#POTD {
+  padding: 70px;
+  background-image: url("/img/dark-download.png");
+  color: #eee
+}
+
+.preload {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  margin: -42px 0 0 -12px;
+  background: #0B0911;
+  transform: rotate(45deg);
+  animation: spin 1s infinite linear;
+}
+@keyframes spin {
+	0% { -webkit-transform:rotate(0deg); }
+	100% { -webkit-transform:rotate(360deg); }
+}

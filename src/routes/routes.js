@@ -5,6 +5,7 @@ import App from './../App.js';
 import Login from './../components/Login';
 import Home from './../components/Home';
 import Signup from './../components/Signup';
+import Center from './../components/Center';
 import Verify from './../components/Verify';
 
 const Routes =  () => (

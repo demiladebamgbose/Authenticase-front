@@ -1,12 +1,14 @@
-import React, { Component } from 'react';
+import React,{Component} from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Alert, Button } from 'react-bootstrap';
 import * as userActions  from '../actions/userActions';
-import Footer from "./home/Footer";
-
-
+import Script from 'react-load-script';
+import $ from 'jquery';
+import '../styles/iCheck/skins/flat/green.css';
+import '../styles/select2/dist/css/select2.css';
+import '../styles/switchery/dist/switchery.css';
+import '../styles/starrr/dist/starrr.css';
 
 class Signup extends Component {
 
@@ -14,24 +16,24 @@ class Signup extends Component {
     super(props);
 
     this.state = {
-      firstName: '',
-      lastName: '',
-      company : '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      userType: '',
-      dob: '',
-      phoneNumber: '',
-      error: {},
-      requestSent: false,
-      alertVisible: false
+      firstName: '',lastName: '',company : '',email: '',password: '',
+      confirmPassword: '',userType: '',dob: '',phoneNumber: '',error: {},
+      requestSent:false
 
     }
-
     this.onValueChange = this._onValueChanged.bind(this);
     this.createUser = this._createUser.bind(this);
-    this.timeoutFunction = this.timeoutFunction.bind(this);
+  }
+
+  componentDidMount () {
+    console.log(this.props);
+
+    // var wizard = $("#wizard").steps({
+    //   onFinished: function (event, currentIndex) {
+    //     console.log("I set this in the constructor -- all finished");
+    //     this.createUser();
+    //   }
+    // });
   }
 
   _onValueChanged (e) {
@@ -42,10 +44,11 @@ class Signup extends Component {
     let validated = true;
     let error = {};
 
-    if (!this.state.userType) {
-      error.userType= 'Are you joining as a handicapper or a bettor?';
-      validated = false;
-    }
+    // if (!this.state.userType) {
+    //   error.userType= 'Are you joining as a handicapper or a bettor?';
+    //   console.log(this.state)
+    //   validated = false;
+    // }
 
 
     if (!this.state.firstName) {
@@ -99,227 +102,170 @@ class Signup extends Component {
   }
 
   _createUser (e) {
-    let validated = this._validateForm();
-    let dob = new Date(this.state.dob).toUTCString();
-    console.log(dob);
-    if (validated) {
-      const user = {
-        name: {
-          firstName : this.state.firstName,
-          lastName: this.state.lastName
-        },
-        company: this.state.company,
-        email: this.state.email,
-        dob: dob,
-        userType:this.state.userType,
-        password: this.state.password,
-        phoneNumber:this.state.phoneNumber
-      };
+     let validated = this._validateForm();
+     let dob = new Date(this.state.dob).toUTCString();
+     if (validated) {
+       const user = {
+         name: {
+           firstName : this.state.firstName,
+           lastName: this.state.lastName
+         },
+         company: this.state.company,
+         email: this.state.email,
+         dob: dob,
+         userType:"Handicapper",
+         password: this.state.password,
+         phoneNumber:this.state.phoneNumber
+       };
 
-      this.setState({requestSent: true});
-      this.props.action.createUser(user).then(() => {
-        this.setState({alertVisible: true});
-        this.setState({
-            firstName: '',
-            lastName: '',
-            company : '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            userType: '',
-            dob: '',
-            phoneNumber: '',
-            error: {},
-            requestSent: false
-          });
+       this.setState({requestSent: true});
+       this.props.action.createUser(user).then(() => {
+         this.setState({alertVisible: true});
+         this.setState({
+             firstName: '',
+             lastName: '',
+             company : '',
+             email: '',
+             password: '',
+             confirmPassword: '',
+             userType: '',
+             dob: '',
+             phoneNumber: '',
+             error: {},
+             requestSent: false
+           });
 
 
-          setTimeout(
-            this.timeoutFunction
-          , 300);
+          this.props.parentProps.history.push("/dashboard/handicapper");
 
-        }).catch((err) => {
-          console.log(err);
-        })
+
+         }).catch((err) => {
+           console.log(err);
+         })
+      }
+
     }
-
-  }
-
-  timeoutFunction () {
-    console.log('back here');
-    this.setState({alertVisible: false});
-    this.props.history.push('/');
-  }
 
   render () {
-
-    const radioLabel = {
-      'width': '40px',
-      fontSize: '15px'
-    };
-
-    const radioBox = {
-      'marginTop': '14px',
-      color: '#666',
-    };
-
-    const errorBlock = {
-      color: '#d81748',
-      fontSize: '12px'
-    }
-
     return (
-      <div>
-      {this.state.requestSent &&
-          <div className="preload"></div>
-      }
 
-
+      <div >
+      {this.state.requestSent && <div className="preload" style={{margin:"500px, 0px, 300px, 0"}}></div>}
       {!this.state.requestSent &&
-        <div>
-        <div style={{width:'80%', margin:'auto', padding:'50px'}} className="z-depth-2 ">
-        { this.state.alertVisible &&
-          <Alert bsStyle="danger" onDismiss={this.handleAlertDismiss}>
-            <h4>Oh snap! You got an error!</h4>
-            <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
-            <p>
-              <Button bsStyle="danger">Take this action</Button>
-              <span> or </span>
-              <Button onClick={this.handleAlertDismiss}>Hide Alert</Button>
-            </p>
-          </Alert>
-
-        }
-            <form className="form-vertical">
-				        <div className=" text-center" style={{color: '#fdcc52', marginBottom:'25px'}}> <h5 id="login_header"><img height="40" width="40" src="/img/authenticase.jpg" alt="Logo" /> Authenticase</h5></div>
-                <p className="help-block text-center" style={{fontSize: '12px'}}> Feilds marked with <i className="icon-asterisk" ></i>  are compulsory</p><hr/>
 
 
 
-                  <div style={radioBox} className="text-center">
 
-                    <p style={{display:'inline',  marginRight: '44px', fontSize: '15px'}} >
-                    <i className="fa fa-user-plus prefix grey-text" style={{ fontSize: '22px', lineHeight: '3', marginRight: '30px' }}>
-                    </i>Join us as a <i className="icon-asterisk" ></i></p>
+      <div id="register" className="animate form registration_form">
 
-                    <label className='radio-inline' style={{fontSize: '15px'}}>
-                    <input type="radio" name="userType"   value="Bettor" onChange={this.onValueChange}/> Bettor</label>
+        <section className="login_content" style={{width:'375px', margin:'auto',  }}>
 
-                    <p style={{display:'inline', marginLeft:'50px', marginRight: '50px', fontSize: '15px'}}>or  </p>
+        <form className="form-horizontal form-label-left">
+         <h1>Create Account</h1>
 
-                    <label className='radio-inline' style={radioLabel}>
-                    <input type="radio" name="userType"  onChange={this.onValueChange} value="Handicapper"/> Handicapper</label>
-                    {this.state.error.userType && <span style= {errorBlock} className="help-block">{this.state.error.userType}</span>}
-                  </div>
+              <div className="form_wizard wizard_horizontal" >
 
-                  <div className="row ">
-                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
-                          <div className="md-form">
-                            <i className="fa fa-user prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
-                            <input type="text" id="firstName" className="form-control" onChange={this.onValueChange} name="firstName" value={this.state.firstName}/>
-                            <label >First Name <i className="icon-asterisk" ></i></label>
-                          </div>
-                          {this.state.error.firstName && <span style= {errorBlock} className="help-block">{this.state.error.firstName}</span>}
-                    </div>
-                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
-                          <div className="md-form">
-                            <i className="fa fa-user prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
-                            <input type="text" id="lastName" className="form-control" name="lastName" onChange={this.onValueChange} value={this.state.lastName}/>
-                            <label >Last Name <i className="icon-asterisk"></i> </label>
-                          </div>
-                          {this.state.error.lastName && <span style= {errorBlock} className="help-block">{this.state.error.lastName}</span>}
-                    </div>
-                  </div>
 
-                  <div className="row ">
-                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
-                          <div className="md-form">
-                            <i className="fa fa-envelope prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
-                            <input type="text" id="email" className="form-control" onChange={this.onValueChange} name="email" value={this.state.email}/>
-                            <label>Email address <i className="icon-asterisk" ></i></label>
-                          </div>
-                          {this.state.error.email && <span style= {errorBlock} className="help-block">{this.state.error.email}</span>}
-                    </div>
-                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
-                          <div className="md-form">
-                            <i className="fa fa-phone prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
-                            <input type="text" id="phoneNumber" className="form-control" name="phoneNumber" onChange={this.onValueChange} value={this.state.phoneNumber}/>
-                            <label >Phone number <i className="icon-asterisk"></i></label>
-                          </div>
-                          {this.state.error.phoneNumber && <span style= {errorBlock} className="help-block">{this.state.error.phoneNumber}</span>}
-                    </div>
-                  </div>
-
-                  <div className="row ">
-                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
-                          <div className="md-form">
-                            <div className="row">
-                            <div className="col-xs-1">
-                              <i className="fa fa-calendar prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
+                       <div id="step-1">
+                         <div className="row" style={{margin: '30px'}}>
+                           <div className="radio" style={{display:'inline'}}>
+                              <label>
+                                <input type="radio" className="flat" name="userType"   value="Bettor" onChange={this.onValueChange}/> Bettor
+                              </label>
                             </div>
-                              <div className="col-xs-4">
-                                <label style={{lineHeight:'3', marginLeft: '20px'}}> Date of birth <i className="icon-asterisk"></i></label>
-                              </div>
-                              <div className="col">
-                              <input type="date" id="dob" className="form-control"  placeholder="mm/dd/yyyy"onChange={this.onValueChange} name="dob" value={this.state.dob}/>
-                              </div>
-                            </div>
-                          </div>
-                          {this.state.error.dob && <span style= {errorBlock} className="help-block">{this.state.error.dob}</span>}
-                    </div>
+                            <div className="radio" style={{display:'inline', marginLeft:'100px'}}>
+                               <label>
+                                 <input type="radio" className="flat"  name="userType"   value="Handicapper" onChange={this.onValueChange}/> Handicapper
+                               </label>
+                             </div>
+
+                         </div>
+                         {this.state.error.userType && <span style={{marginTop: "-18px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.userType}</span>}
+
+                         <div>
+                           <input type="text" className="form-control" placeholder="First Name" required onChange={this.onValueChange} name="firstName" value={this.state.firstName} />
+                           {this.state.error.firstName && <span style={{marginTop: "-18px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.firstName}</span>}
+
+                         </div>
+                         <div>
+                           <input type="text" className="form-control" placeholder="Last Name" required name="lastName" onChange={this.onValueChange} value={this.state.lastName}/>
+                           {this.state.error.lastName && <span style={{marginTop: "-18px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.lastName}</span>}
+                         </div>
+                         <div>
+                           <input type="email" className="form-control" placeholder="Email" required  onChange={this.onValueChange} name="email" value={this.state.email}/>
+                           {this.state.error.email && <span style={{marginTop: "-18px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.email}</span>}
+                         </div>
 
 
 
+                       </div>
+                       <div id="step-2">
+                         <div>
+                           <input type="text" className="form-control" placeholder="Phone Number" required name="phoneNumber" onChange={this.onValueChange} value={this.state.phoneNumber}/>
 
-                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
-                          <div className="md-form">
-                            <i className="fa fa-th prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
-                            <input type="text" id="company" className="form-control" name="company" onChange={this.onValueChange} value={this.state.company}/>
-                            <label>Company name</label>
-                          </div>
-                          {this.state.error.company && <span style= {errorBlock} className="help-block">{this.state.error.company}</span>}
-                    </div>
-                  </div>
+                           {this.state.error.phoneNumber && <span style={{marginTop: "-18px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.phoneNumber}</span>}
+                         </div>
+
+                         <div>
+                           <input type="email" className="form-control" placeholder="Company Name" required name="company" onChange={this.onValueChange} value={this.state.company}/>
+                         </div>
+
+                         <div>
+
+                           <p style={{textAlign:"left" }}>Date of birth</p>
+                             <input type="date" className="form-control" style={{marginBottom:'15px'}}placeholder="Date of birth" required placeholder="mm/dd/yyyy"onChange={this.onValueChange} name="dob" value={this.state.dob}/>
+
+                             {this.state.error.dob && <span style={{marginTop: "-13px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.dob}</span>}
+
+                         </div>
+                       </div>
+
+                         <div>
+                           <input type="password" className="form-control" placeholder="Password" required  onChange={this.onValueChange} name="password" value={this.state.password}/>
+                           {this.state.error.password && <span style={{marginTop: "-18px", fontSize: "12px", color: "#d66b6b"}} className="help-block">{this.state.error.password}</span>}
+                         </div>
+                         <div>
+                           <input type="password" className="form-control" placeholder="Confirm Password" required name="confirmPassword" onChange={this.onValueChange} value={this.state.confirmPassword} />
+                         </div>
+
+                         <div className="form-group text-center">
+                         <button type="button" className="btn btn-default" onClick={this.createUser}>Sign up</button>
+                         </div>
+
+                     </div>
 
 
-                  <div className="row ">
-                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
-                          <div className="md-form">
-                            <i className="fa fa-lock prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
-                            <input type="password" id="password" className="form-control" onChange={this.onValueChange} name="password" value={this.state.password}/>
-                            <label >Password <i className="icon-asterisk" ></i></label>
-                          </div>
-                          {this.state.error.password && <span style= {errorBlock} className="help-block">{this.state.error.password}</span>}
-                    </div>
+                     <div className="clearfix"></div>
 
-                    <div className="form-group col" style={{margin:'20px', marginTop:'20px'}}>
-                          <div className="md-form">
-                            <i className="fa fa-lock prefix grey-text" style={{ fontSize: '22px', lineHeight: '3'}}></i>
-                            <input type="text" id="confirmPassword" className="form-control" name="confirmPassword" onChange={this.onValueChange} value={this.state.confirmPassword}/>
-                            <label>Confirm Password <i className="icon-asterisk" ></i></label>
-                          </div>
-                    </div>
-                  </div>
+                     <div className="separator">
+                       <p className="change_link">Already a member ?
+                         <a href="#signin" className="to_register" style={{color:'#7585D9'}}> Log in </a>
+                       </p>
+
+                       <div className="clearfix"></div>
+                       <br />
+
+              <div>
+              <div className="clearfix"></div> <hr/>
+                <p>© 2008-2017, Authenticase.com , Inc</p>
+              </div>
+            </div>
 
 
-                  <div className="text-center">
-                   <button type="button" className="btn btn-danger" onClick={this.createUser}> Sign up <i className="fa fa-user-plus"> </i></button>
-                  </div>
-
-                <div className="text-center" style={{marginTop:'20px'}}>
-                  <h5 className="help-block" > Already Have an account? </h5>
-                  <Link to='/login'> <button type="button"  className="btn btn-indigo">Login</button></Link>
-                </div>
             </form>
+        </section>
         </div>
-        <Footer/>
-        </div>
-      }
+       }
+
+       <Script url="/vendor/iCheck/icheck.js"/>
+       <Script url="/vendor/select2/dist/js/select2.js"/>
+       <Script url="/vendor/starrr/dist/starrr.js"/>
+       <Script url="/vendor/switchery/dist/switchery.js"/>
+
       </div>
-    );
+    )
   }
 }
-
 
 function mapStateToProps(state, ownProps) {
     return {
@@ -333,19 +279,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-
-
-
 export default connect (mapStateToProps, mapDispatchToProps)(Signup);
-
-
-
-// <div className="dropdown">
-//     <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown primary</button>
-//     <div className="dropdown-menu dropdown-primary">
-//         <a className="dropdown-item" value = "value">Action</a>
-//         <a className="dropdown-item">Another action</a>
-//         <a className="dropdown-item">Something else here</a>
-//         <a className="dropdown-item">Something else here</a>
-//     </div>
-// </div>
